@@ -131,7 +131,7 @@ def addTXFees(r0,r1,transactionFee):
 
 
 numBlocksPerDay=10
-numberOfSimsPerCombination=250
+numberOfSimsPerCombination=500
 
 firstSet=[i for i in range(0,numberOfSimsPerCombination)]
 secondSet=[i for i in range(numberOfSimsPerCombination,numberOfSimsPerCombination*2)]
@@ -178,7 +178,7 @@ for dailyExpectedVol in [1.05]:
             activeFuturePositions=[[0,0] for i in range(0,conversionFrequency)]
             for block in range(0,blocksForSim):
                 """ **(2*random.random()) introduces a vol of vol"""
-                perBlockVol=(dailyExpectedVol+(dailyExpectedVol-1)*(random.random()-0.5))**(1/numBlocksPerDay)
+                perBlockVol=dailyExpectedVol**(1/numBlocksPerDay)
                 if random.random()>0.5:
                     price=price*(perBlockVol)
                 else:
@@ -197,7 +197,6 @@ for dailyExpectedVol in [1.05]:
                                        "vaultFutures":vaultStrategyValueFuts,
                                        "AMM":(math.sqrt(r0start*r1start*price)+math.sqrt(r0start*r1start/price)*price)*(1+dailyFeesVsK/numBlocksPerDay)**numberOfSimsPerCombination,
                                        "HODL":r0start+r1start*price},ignore_index=True)
-results.to_csv('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRAlphaComparison.csv')  
 
 
 results["vaultLazyConvert"]=results["vaultLazyConvert"]/results["AMM"]
@@ -206,10 +205,10 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label=" 0.95")
 plt.legend(loc="upper left")
 plt.title("alpha")
-plt.ylabel("SCRAMM/CFMM")
+plt.ylabel("SCRAMM / CFMM")
 plt.xlabel("final price")
 
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRAlphaComparison.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRAlphaComparison.png',dpi=500)
 
 results=pd.DataFrame(data={"dailyExpectedVol":[],
                            "alpha":[],
@@ -246,7 +245,7 @@ for dailyExpectedVol in [1.05]:
             activeFuturePositions=[[0,0] for i in range(0,conversionFrequency)]
             for block in range(0,blocksForSim):
                 """ **(2*random.random()) introduces a vol of vol"""
-                perBlockVol=(dailyExpectedVol+(dailyExpectedVol-1)*(random.random()-0.5))**(1/numBlocksPerDay)
+                perBlockVol=dailyExpectedVol**(1/numBlocksPerDay)
                 if random.random()>0.5:
                     price=price*(perBlockVol)
                 else:
@@ -265,7 +264,7 @@ for dailyExpectedVol in [1.05]:
                                        "vaultFutures":vaultStrategyValueFuts,
                                        "AMM":(math.sqrt(r0start*r1start*price)+math.sqrt(r0start*r1start/price)*price)*(1+dailyFeesVsK/numBlocksPerDay)**numberOfSimsPerCombination,
                                        "HODL":r0start+r1start*price},ignore_index=True)
-results.to_csv('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRRuntimeComparison.csv')  
+
 
 results["vaultLazyConvert"]=results["vaultLazyConvert"]/results["AMM"]
 plt.figure(1)
@@ -273,10 +272,10 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="3 years")
 plt.legend(loc="upper left")
 plt.title("Lifetime of Pool")
-plt.ylabel("SCRAMM/CFMM")
+plt.ylabel("SCRAMM / CFMM")
 plt.xlabel("final price")
  
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRRuntimeComparison.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRRuntimeComparison.png',dpi=500)
 
 results=pd.DataFrame(data={"dailyExpectedVol":[],
                            "alpha":[],
@@ -292,7 +291,7 @@ conversionFrequency=numBlocksPerDay
 
 results
 
-for dailyExpectedVol in [1.05,1.1]:
+for dailyExpectedVol in [1.05,1.1,1.15]:
     for numDaysSimulation in [365]:
         blocksForSim=numBlocksPerDay*numDaysSimulation
         for sim in range(0,numberOfSimsPerCombination):
@@ -314,7 +313,7 @@ for dailyExpectedVol in [1.05,1.1]:
             activeFuturePositions=[[0,0] for i in range(0,conversionFrequency)]
             for block in range(0,blocksForSim):
                 """ **(2*random.random()) introduces a vol of vol"""
-                perBlockVol=(dailyExpectedVol+(dailyExpectedVol-1)*(random.random()-0.5))**(1/numBlocksPerDay)
+                perBlockVol=dailyExpectedVol**(1/numBlocksPerDay)
                 if random.random()>0.5:
                     price=price*(perBlockVol)
                 else:
@@ -332,20 +331,21 @@ for dailyExpectedVol in [1.05,1.1]:
                                        "vaultFutures":vaultStrategyValueFuts,
                                        "AMM":(math.sqrt(r0start*r1start*price)+math.sqrt(r0start*r1start/price)*price)*(1+dailyFeesVsK/numBlocksPerDay)**numberOfSimsPerCombination,
                                        "HODL":r0start+r1start*price},ignore_index=True)
-results.to_csv('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRVolComparison.csv')  
+
 
 
 results["vaultLazyConvert"]=results["vaultLazyConvert"]/results["AMM"]
 plt.figure(2)
-plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vaultLazyConvert"].loc[firstSet].values.tolist(),c="magenta",label="vol = 5%")
-plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="vol = 10%")
+plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vaultLazyConvert"].loc[firstSet].values.tolist(),c="magenta",label="5%")
+plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="10%")
+plt.scatter(x=results["finalPrice"].loc[thirdSet].values.tolist(),y=results["vaultLazyConvert"].loc[thirdSet].values.tolist(),c="green",label="15%")
 plt.legend(loc="upper left")
-plt.title("Volatility")
-plt.ylabel("SCRAMM/CFMM")
+plt.title("Expected Daily Price Move")
+plt.ylabel("SCRAMM / CFMM")
 plt.xlabel("final price")
 
  
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRVolComparison.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRVolComparison.png',dpi=500)
 
 
 results=pd.DataFrame(data={"dailyExpectedVol":[],
@@ -383,7 +383,7 @@ for dailyExpectedVol in [1.05]:
             activeFuturePositions=[[0,0] for i in range(0,conversionFrequency)]
             for block in range(0,blocksForSim):
                 """ **(2*random.random()) introduces a vol of vol"""
-                perBlockVol=(dailyExpectedVol+(dailyExpectedVol-1)*(random.random()-0.5))**(1/numBlocksPerDay)
+                perBlockVol=dailyExpectedVol**(1/numBlocksPerDay)
                 if random.random()>0.5:
                     price=price*(perBlockVol)
                 else:
@@ -402,7 +402,6 @@ for dailyExpectedVol in [1.05]:
                                        "vaultFutures":vaultStrategyValueFuts,
                                        "AMM":(math.sqrt(r0start*r1start*price)+math.sqrt(r0start*r1start/price)*price)*(1+dailyFeesVsK/numBlocksPerDay)**numberOfSimsPerCombination,
                                        "HODL":r0start+r1start*price},ignore_index=True)
-results.to_csv('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRDiffusionComparison1dayVs7day.csv')  
 
 
 results["vaultLazyConvert"]=results["vaultLazyConvert"]/results["AMM"]
@@ -411,12 +410,13 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="every week")
 plt.legend(loc="upper left")
 plt.title("Conversion Frequency")
-plt.ylabel("SCRAMM/CFMM")
+plt.ylabel("SCRAMM / CFMM")
 plt.xlabel("final price")
  
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRConvFreqComparison.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRConvFreqComparison.png',dpi=500)
 
-
+print("1 day mean",results["vaultLazyConvert"].loc[firstSet].describe())
+print("1 week mean",results["vaultLazyConvert"].loc[secondSet].describe())
 
 results=pd.DataFrame(data={"dailyExpectedVol":[],
                            "alpha":[],
@@ -454,7 +454,7 @@ for dailyExpectedVol in [1.05]:
             activeFuturePositions=[[0,0] for i in range(0,conversionFrequency)]
             for block in range(0,blocksForSim):
                 """ **(2*random.random()) introduces a vol of vol"""
-                perBlockVol=(dailyExpectedVol+(dailyExpectedVol-1)*(random.random()-0.5))**(1/numBlocksPerDay)
+                perBlockVol=dailyExpectedVol**(1/numBlocksPerDay)
                 if random.random()>0.5:
                     price=price*(perBlockVol)
                 else:
@@ -476,7 +476,6 @@ for dailyExpectedVol in [1.05]:
                                        "vaultFutures":vaultStrategyValueFuts,
                                        "AMM":(math.sqrt(r0start*r1start*price)+math.sqrt(r0start*r1start/price)*price)*(1+dailyFeesVsK/numBlocksPerDay)**numberOfSimsPerCombination,
                                        "HODL":r0start+r1start*price},ignore_index=True)
-results.to_csv('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRFeeComparison10percentTVLvolumeWith0vs0point03vs0point3percentFee.csv')  
 
 a=results["vaultLazyConvert"]/results["AMM"]
 b=results["vaultFutures"]/results["AMM"]
@@ -487,10 +486,10 @@ plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=a.loc[secon
 plt.scatter(x=results["finalPrice"].loc[thirdSet].values.tolist(),y=a.loc[thirdSet].values.tolist(),c="green",label="fee = 0.3%")
 plt.legend(loc="upper left")
 plt.title("Fees (Given 10% of pool TVL trades per day)")
-plt.ylabel("SCRAMM/CFMM")
+plt.ylabel("SCRAMM / CFMM")
 plt.xlabel("final price")
  
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRFeeComparison.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRFeeComparison.png',dpi=500)
 
 
 
@@ -500,8 +499,11 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=b.loc[firstS
 plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=c.loc[firstSet].values.tolist(),c="green",label="HODL")
 plt.legend(loc="upper left")
 plt.title("Fees")
-plt.ylabel("strategy/CFMM")
+plt.ylabel("Strategy / CFMM")
 plt.xlabel("final price")
  
-plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/HODL.png')
+plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/HODL.png',dpi=500)
+
+print("vaultLazyConvert",a.loc[firstSet].describe())
+print("vaultFutures",b.loc[firstSet].describe())
 
