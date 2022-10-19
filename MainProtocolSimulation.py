@@ -205,7 +205,7 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label=" 0.95")
 plt.legend(loc="upper left")
 plt.title("alpha")
-plt.ylabel("SCRAMM / CFMM")
+plt.ylabel("Diamond / CFMM")
 plt.xlabel("final price")
 
 plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRAlphaComparison.png',dpi=500)
@@ -272,7 +272,7 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="3 years")
 plt.legend(loc="upper left")
 plt.title("Lifetime of Pool")
-plt.ylabel("SCRAMM / CFMM")
+plt.ylabel("Diamond / CFMM")
 plt.xlabel("final price")
  
 plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRRuntimeComparison.png',dpi=500)
@@ -341,7 +341,7 @@ plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["va
 plt.scatter(x=results["finalPrice"].loc[thirdSet].values.tolist(),y=results["vaultLazyConvert"].loc[thirdSet].values.tolist(),c="green",label="15%")
 plt.legend(loc="upper left")
 plt.title("Expected Daily Price Move")
-plt.ylabel("SCRAMM / CFMM")
+plt.ylabel("Diamond / CFMM")
 plt.xlabel("final price")
 
  
@@ -410,7 +410,7 @@ plt.scatter(x=results["finalPrice"].loc[firstSet].values.tolist(),y=results["vau
 plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=results["vaultLazyConvert"].loc[secondSet].values.tolist(),c="orange",label="every week")
 plt.legend(loc="upper left")
 plt.title("Conversion Frequency")
-plt.ylabel("SCRAMM / CFMM")
+plt.ylabel("Diamond / CFMM")
 plt.xlabel("final price")
  
 plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRConvFreqComparison.png',dpi=500)
@@ -486,7 +486,7 @@ plt.scatter(x=results["finalPrice"].loc[secondSet].values.tolist(),y=a.loc[secon
 plt.scatter(x=results["finalPrice"].loc[thirdSet].values.tolist(),y=a.loc[thirdSet].values.tolist(),c="green",label="fee = 0.3%")
 plt.legend(loc="upper left")
 plt.title("Fees (Given 10% of pool TVL trades per day)")
-plt.ylabel("SCRAMM / CFMM")
+plt.ylabel("Diamond / CFMM")
 plt.xlabel("final price")
  
 plt.savefig('C:/Users/U176198/Documents/PhD/Projects/LVR/LVRFeeComparison.png',dpi=500)
